@@ -1,0 +1,16 @@
+name: tf_ner
+dependencies:
+  #
+  # Basics
+  - python=3.7
+  - matplotlib
+  - pip
+  #
+  # Deep learning
+  - pip:
+    - tensorflow==1.14.0
+    - git+https://github.com/guillaumegenthial/tf_metrics.git
+  #
+  # Misc
+  - jupyter
+  - neovim

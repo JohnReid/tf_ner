@@ -1,0 +1,67 @@
+#!/usr/bin/env python
+
+"""Split one data set into three: {train|testa|testb}.{words|tags|docs}.txt"""
+
+import argparse
+import os
+import numpy as np
+
+
+def read_file(path):
+  return list(open(path))
+
+
+# Types of data
+TYPES = ['words', 'docs', 'tags']
+
+# Desired subsets
+SUBSETS = ['train', 'testa', 'testb']
+
+# Desired split sizes across the subsets (train, testa and testb)
+SPLITS = np.array([.7, .15, .15])
+assert len(SPLITS) == len(SUBSETS)
+
+# Parse arguments
+parser = argparse.ArgumentParser(description='Split data into train, testa and testb.')
+parser.add_argument('input_directory', help='directory to find the complete data set: train.{words|tags|docs}.txt')
+parser.add_argument('--seed', type=int, default=None, help='seed the random number generator')
+args = parser.parse_args()
+
+if args.seed is not None:
+  print(f'Seeding RNG with {args.seed}')
+  np.random.seed(args.seed)
+
+print(f'Reading data from {args.input_directory}')
+
+# Read the 3 input files
+data = dict((t, read_file(os.path.join(args.input_directory, f'train.{t}.txt'))) for t in TYPES)
+
+# Check all files have the same number of samples
+nitems = np.fromiter(map(len, data.values()), dtype=int)
+assert (nitems[0] == nitems).all(), nitems
+nitems = nitems[0]
+print(f'We have {nitems} samples')
+
+# Sample an assignment to train, testa or testb for each sample
+assignments = np.random.choice(a=len(SPLITS), size=nitems, p=SPLITS)
+
+# Gather the samples for each subset and write them to output
+for ss, subset in enumerate(SUBSETS):
+
+  # Which samples are in this subset?
+  in_subset = assignments == ss
+  print(f'We have {sum(in_subset)} samples in the {subset} subset')
+
+  # For each data type
+  for t in TYPES:
+    assert len(data[t]) == len(in_subset)
+
+    # Open output path
+    out_path = f'{subset}.{t}.txt'
+    # print(f'Writing {out_path}')
+    with open(out_path, 'w') as f:
+
+      # Write each line that is in this subset
+      for line, in_ss in zip(data[t], in_subset):
+        if in_ss:
+          f.write(line)

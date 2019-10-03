@@ -4,5 +4,5 @@ download-glove:
 	rm glove.840B.300d.zip
 
 build:
-	python ../../scripts/build_vocab.py
-	python ../../scripts/build_glove.py
+	python ../../scripts/build-vocab
+	python ../../scripts/build-glove

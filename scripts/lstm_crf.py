@@ -2,7 +2,7 @@
 
 """GloVe Embeddings + bi-LSTM + CRF"""
 
-__author__ = "Guillaume Genthial"
+__author__ = "Guillaume Genthial and John Reid"
 
 import functools
 import json
@@ -20,7 +20,7 @@ with warnings.catch_warnings():
   import tensorflow as tf
   from tf_metrics import precision, recall, f1
 
-DATADIR = '../../data/thoughtonomy_light'
+DATADIR = '../data/tgmy-synthetic'
 
 # Logging
 Path('results').mkdir(exist_ok=True)

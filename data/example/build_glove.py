@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """Build an np.array from some glove file and some vocab file
 
 You need to download `glove.840B.300d.txt` from

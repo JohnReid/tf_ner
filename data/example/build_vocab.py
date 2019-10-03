@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """Script to build words, chars and tags vocab"""
 
 __author__ = "Guillaume Genthial"

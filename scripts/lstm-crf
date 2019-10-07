@@ -22,7 +22,7 @@ with warnings.catch_warnings():
 
 # Define and parse arguments
 parser = argparse.ArgumentParser(description='Fit a BiLSTM-CRF.')
-parser.add_argument('data-dir', default='.',
+parser.add_argument('data_dir', default='.',
                     help='directory to find the complete data set: extracted.{words|tags|docs}.txt')
 args = parser.parse_args()
 
@@ -46,11 +46,8 @@ def parse_fn(line_words, line_tags):
 
 def generator_fn(words, tags):
   """Parses a file of words and a file of tags. Yields `((words, len(words)), tags` for each line."""
-  print(words)
-  print(tags)
   with Path(words).open('r') as f_words, Path(tags).open('r') as f_tags:
     for lineno, (line_words, line_tags) in enumerate(zip(f_words, f_tags)):
-      print(lineno)
       yield parse_fn(line_words, line_tags)
 
 

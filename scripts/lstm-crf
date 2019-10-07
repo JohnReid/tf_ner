@@ -8,18 +8,23 @@ import functools
 import json
 import logging
 import sys
+import warnings
+import argparse
 from pathlib import Path
 import numpy as np
 
 # To do: remove this when bugs fixed
-import warnings
 with warnings.catch_warnings():
   # warnings.filterwarnings("ignore", category=FutureWarning)
   warnings.simplefilter("ignore", category=FutureWarning)
   import tensorflow as tf
   from tf_metrics import precision, recall, f1
 
-DATADIR = '../data/tgmy-synthetic'
+# Define and parse arguments
+parser = argparse.ArgumentParser(description='Fit a BiLSTM-CRF.')
+parser.add_argument('data-dir', default='.',
+                    help='directory to find the complete data set: extracted.{words|tags|docs}.txt')
+args = parser.parse_args()
 
 # Logging
 Path('results').mkdir(exist_ok=True)
@@ -159,19 +164,19 @@ if __name__ == '__main__':
       'batch_size': 20,
       'buffer': 15000,
       'lstm_size': 100,
-      'words': str(Path(DATADIR, 'vocab.words.txt')),
-      'chars': str(Path(DATADIR, 'vocab.chars.txt')),
-      'tags': str(Path(DATADIR, 'vocab.tags.txt')),
-      'glove': str(Path(DATADIR, 'glove.npz'))
+      'words': str(Path(args.data_dir, 'vocab.words.txt')),
+      'chars': str(Path(args.data_dir, 'vocab.chars.txt')),
+      'tags': str(Path(args.data_dir, 'vocab.tags.txt')),
+      'glove': str(Path(args.data_dir, 'glove.npz'))
   }
   with Path('results/params.json').open('w') as f:
     json.dump(params, f, indent=4, sort_keys=True)
 
   def fwords(name):
-    return str(Path(DATADIR, '{}.words.txt'.format(name)))
+    return str(Path(args.data_dir, '{}.words.txt'.format(name)))
 
   def ftags(name):
-    return str(Path(DATADIR, '{}.tags.txt'.format(name)))
+    return str(Path(args.data_dir, '{}.tags.txt'.format(name)))
 
   # Estimator, train and evaluate
   train_inpf = functools.partial(input_fn, fwords('train'), ftags('train'),

@@ -21,9 +21,9 @@ SUBSETS = ['train', 'testa', 'testb']
 SPLITS = np.array([.7, .15, .15])
 assert len(SPLITS) == len(SUBSETS)
 
-# Parse arguments
+# Define and parse arguments
 parser = argparse.ArgumentParser(description='Split data into train, testa and testb.')
-parser.add_argument('input_directory', help='directory to find the complete data set: extracted.{words|tags|docs}.txt')
+parser.add_argument('input-directory', help='directory to find the complete data set: extracted.{words|tags|docs}.txt')
 parser.add_argument('--output_directory', default='.', help='directory to write the split data set: {train|testa|testb}.{words|tags|docs}.txt')
 parser.add_argument('--seed', type=int, default=None, help='seed the random number generator')
 args = parser.parse_args()

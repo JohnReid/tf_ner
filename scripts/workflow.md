@@ -7,3 +7,4 @@ This document describes a workflow to process invoices with a BiLSTM-CRF.
 - Build the vocabulary from GloVe:
   - `build-vocab` : build the words, characters and tags vocabularies.
   - `build-glove` : build GloVe representations of the words.
+- Fit the BiLSTM-CRF: `lstm-crf`

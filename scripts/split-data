@@ -23,7 +23,8 @@ assert len(SPLITS) == len(SUBSETS)
 
 # Parse arguments
 parser = argparse.ArgumentParser(description='Split data into train, testa and testb.')
-parser.add_argument('input_directory', help='directory to find the complete data set: train.{words|tags|docs}.txt')
+parser.add_argument('input_directory', help='directory to find the complete data set: extracted.{words|tags|docs}.txt')
+parser.add_argument('--output_directory', default='.', help='directory to write the split data set: {train|testa|testb}.{words|tags|docs}.txt')
 parser.add_argument('--seed', type=int, default=None, help='seed the random number generator')
 args = parser.parse_args()
 
@@ -34,7 +35,7 @@ if args.seed is not None:
 print(f'Reading data from {args.input_directory}')
 
 # Read the 3 input files
-data = dict((t, read_file(os.path.join(args.input_directory, f'train.{t}.txt'))) for t in TYPES)
+data = dict((t, read_file(os.path.join(args.input_directory, f'extracted.{t}.txt'))) for t in TYPES)
 
 # Check all files have the same number of samples
 nitems = np.fromiter(map(len, data.values()), dtype=int)
@@ -57,7 +58,7 @@ for ss, subset in enumerate(SUBSETS):
     assert len(data[t]) == len(in_subset)
 
     # Open output path
-    out_path = f'{subset}.{t}.txt'
+    out_path = os.path.join(args.output_directory, f'{subset}.{t}.txt')
     # print(f'Writing {out_path}')
     with open(out_path, 'w') as f:
 

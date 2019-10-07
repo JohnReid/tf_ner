@@ -7,9 +7,8 @@ __author__ = "Guillaume Genthial and John Reid"
 import functools
 import json
 import logging
-from pathlib import Path
 import sys
-
+from pathlib import Path
 import numpy as np
 
 # To do: remove this when bugs fixed
@@ -36,13 +35,17 @@ def parse_fn(line_words, line_tags):
   # Encode in Bytes for TF
   words = [w.encode() for w in line_words.strip().split()]
   tags = [t.encode() for t in line_tags.strip().split()]
-  assert len(words) == len(tags), "Words and tags lengths don't match"
+  assert len(words) == len(tags), f"Words ({len(words)}) and tags ({len(tags)}) lengths don't match"
   return (words, len(words)), tags
 
 
 def generator_fn(words, tags):
+  """Parses a file of words and a file of tags. Yields `((words, len(words)), tags` for each line."""
+  print(words)
+  print(tags)
   with Path(words).open('r') as f_words, Path(tags).open('r') as f_tags:
-    for line_words, line_tags in zip(f_words, f_tags):
+    for lineno, (line_words, line_tags) in enumerate(zip(f_words, f_tags)):
+      print(lineno)
       yield parse_fn(line_words, line_tags)
 
 

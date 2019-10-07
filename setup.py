@@ -8,4 +8,5 @@ setup(name='tfner',
       author_email='johnbaronreid@netscape.net',
       license='MIT',
       packages=['tfner'],
+      scripts=['scripts/build-glove', 'scripts/build-vocab', 'scripts/lstm-crf', 'scripts/split-data'],
       zip_safe=False)

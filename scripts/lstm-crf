@@ -23,7 +23,7 @@ with warnings.catch_warnings():
 # Define and parse arguments
 parser = argparse.ArgumentParser(description='Fit a BiLSTM-CRF.')
 parser.add_argument('data_dir', default='.',
-                    help='directory to find the complete data set: extracted.{words|tags|docs}.txt')
+                    help='directory containing the data: {train|testa|testb}.{words|tags|docs}.txt')
 args = parser.parse_args()
 
 # Logging

@@ -3,6 +3,7 @@ dependencies:
   #
   # Basics
   - python=3.7
+  - flake8
   - matplotlib
   - gast=0.2.2
   - packaging

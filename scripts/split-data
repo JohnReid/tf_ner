@@ -41,7 +41,7 @@ data = dict((t, read_file(os.path.join(args.input_directory, f'extracted.{t}.txt
 nitems = np.fromiter(map(len, data.values()), dtype=int)
 assert (nitems[0] == nitems).all(), nitems
 nitems = nitems[0]
-print(f'We have {nitems} samples')
+print(f'{nitems} samples')
 
 # Sample an assignment to train, testa or testb for each sample
 assignments = np.random.choice(a=len(SPLITS), size=nitems, p=SPLITS)
@@ -51,7 +51,7 @@ for ss, subset in enumerate(SUBSETS):
 
   # Which samples are in this subset?
   in_subset = assignments == ss
-  print(f'We have {sum(in_subset)} samples in the {subset} subset')
+  print(f'{sum(in_subset)} samples in the {subset} subset')
 
   # For each data type
   for t in TYPES:
